@@ -23,14 +23,14 @@ public class Country {
 	@Size(max = 26)
 	private String region;
 	@NotNull
-	private String surfaceArea;
-	private String indepYear;
+	private Double surfaceArea;
+	private Short indepYear;
 	@NotNull
 	private Long population;
 	private Double lifeExpectancy;
 	@NotNull
 	private Double gnp;
-	private String localname;
+	private String localName;
 	@NotNull
 	private String governmentForm;
 	private String headOfState;
