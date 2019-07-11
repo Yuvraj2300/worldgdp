@@ -11,8 +11,9 @@ import lombok.Setter;
 @Setter
 @Getter
 public class CountryLanguage {
-	@NotNull
 	private Country country;
+	@NotNull
+	private String countryCode;
 	@NotNull
 	@Size(max = 30)
 	private String language;

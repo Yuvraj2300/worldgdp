@@ -16,7 +16,7 @@ public class CityRowMapper implements RowMapper<City> {
 		city.setId(rs.getLong("id"));
 		city.setDistrict(rs.getString("district"));
 		city.setPopulation(rs.getLong("population"));
-		return null;
+		return city;
 	}
 
 }
