@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.util.StringUtils;
 
 import com.ys.worldgdp.Country;
+import com.ys.worldgdp.dao.mapper.CountryRowMapper;
 
 public class CountryDAO {
 	
@@ -65,7 +66,12 @@ public class CountryDAO {
 				+ (!StringUtils.isEmpty((String)params.get("region")) ? REGION_WHERE_CLAUSE : "")
 				+ " ORDER BY c.code "
 				+ "  LIMIT :offset , :size ");
-		return null;
-	//	return	 namedParameterJdbcTemplate.query(sql, rse);
+		
+		return namedParameterJdbcTemplate.query(
+				SELECT_CLAUSE + "WHERE 1=1 "
+						+ (StringUtils.isEmpty((String) params.get("search")) ? SEARCH_WHERE_CLAUSE : "")
+						+ (StringUtils.isEmpty((String) params.get("continent")) ? CONTINENT_WHERE_CLAUSE : "")
+						+ (StringUtils.isEmpty(params.get("region")) ? REGION_WHERE_CLAUSE : "") + PAGINATION_CLAUSE,
+				params, new CountryRowMapper());
 	}
 }
