@@ -1,5 +1,6 @@
 package com.ys.worldgdp.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +44,7 @@ public class CountryDAO {
 			" AND c.region = :region ";
 	
 	private static final String PAGINATION_CLAUSE = " ORDER BY c.code "
-			+ "  LIMIT :offset , :size ";
+			+ "  LIMIT :size OFFSET :offset ";
 	
 	private static final Integer PAGE_SIZE = 20;
 	
@@ -59,13 +60,11 @@ public class CountryDAO {
 		params.put("size",  PAGE_SIZE);
 		
 		System.out.println("Params: {}"+ params.toString());
-		System.out.println(SELECT_CLAUSE
-				+ " WHERE 1 = 1 "
-				+ (!StringUtils.isEmpty((String)params.get("search")) ? SEARCH_WHERE_CLAUSE : "")
-				+ (!StringUtils.isEmpty((String)params.get("continent")) ? CONTINENT_WHERE_CLAUSE : "")
-				+ (!StringUtils.isEmpty((String)params.get("region")) ? REGION_WHERE_CLAUSE : "")
-				+ " ORDER BY c.code "
-				+ "  LIMIT :offset , :size ");
+		System.out.println(SELECT_CLAUSE + " WHERE 1 = 1 "
+				+ (!StringUtils.isEmpty((String) params.get("search")) ? SEARCH_WHERE_CLAUSE : "")
+				+ (!StringUtils.isEmpty((String) params.get("continent")) ? CONTINENT_WHERE_CLAUSE : "")
+				+ (!StringUtils.isEmpty((String) params.get("region")) ? REGION_WHERE_CLAUSE : "") + " ORDER BY c.code "
+				+ "  LIMIT :size OFFSET :offset ");
 		
 		return namedParameterJdbcTemplate.query(
 				SELECT_CLAUSE + "WHERE 1=1 "
@@ -73,5 +72,55 @@ public class CountryDAO {
 						+ (StringUtils.isEmpty((String) params.get("continent")) ? CONTINENT_WHERE_CLAUSE : "")
 						+ (StringUtils.isEmpty(params.get("region")) ? REGION_WHERE_CLAUSE : "") + PAGINATION_CLAUSE,
 				params, new CountryRowMapper());
+	}
+	
+	public int getCountriesCount(Map<String, Object> params) {
+		return namedParameterJdbcTemplate.queryForObject(
+				"SELECT COUNT(*) FROM COUNTRY c" + "WHERE 1=1"
+						+ (StringUtils.isEmpty((String) params.get("search")) ? SEARCH_WHERE_CLAUSE : "")
+						+ (StringUtils.isEmpty((String) params.get("continent")) ? CONTINENT_WHERE_CLAUSE : "")
+						+ (StringUtils.isEmpty(params.get("region")) ? REGION_WHERE_CLAUSE : ""),
+				params, Integer.class);
+	}
+
+	public Country getCountryDetail(String code) {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("code", code);
+		return namedParameterJdbcTemplate.queryForObject(SELECT_CLAUSE + "WHERE c = :code", params,
+				new CountryRowMapper());
+	}
+
+	public void editCountryDetail(String code, Country country) {
+			namedParameterJdbcTemplate.update(" UPDATE country SET "
+			+ " name = :name, "
+			+ " localname = :localName, "
+			+ " capital = :capital, "
+			+ " continent = :continent, "
+			+ " region = :region, "
+			+ " HeadOfState = :headOfState, "
+			+ " GovernmentForm = :governmentForm, "
+			+ " IndepYear = :indepYear, "
+			+ " SurfaceArea = :surfaceArea, "
+			+ " population = :population, "
+			+ " LifeExpectancy = :lifeExpectancy "
+			+ "WHERE Code = :code ",
+		getCountryAsMap(code, country));
+	}
+	
+	public Map<String, Object> getCountryAsMap(String code, Country country) {
+		Map<String, Object> countryMap = new HashMap<>();
+		countryMap.put("name", country.getName());
+		countryMap.put("localName", country.getLocalName());
+		countryMap.put("capital", country.getCapital());
+		countryMap.put("continent", country.getContinent());
+		countryMap.put("region", country.getRegion());
+		countryMap.put("headOfState", country.getHeadOfState());
+		countryMap.put("governmentForm", country.getGovernmentForm());
+		countryMap.put("indepYear", country.getIndepYear());
+		countryMap.put("surfaceArea", country.getSurfaceArea());
+		countryMap.put("population", country.getPopulation());
+		countryMap.put("lifeExpectancy", country.getLifeExpectancy());
+		countryMap.put("code", code);
+		return countryMap;
 	}
 }
