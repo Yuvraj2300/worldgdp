@@ -11,6 +11,9 @@ import org.springframework.util.StringUtils;
 import com.ys.worldgdp.Country;
 import com.ys.worldgdp.dao.mapper.CountryRowMapper;
 
+import lombok.Setter;
+
+@Setter
 public class CountryDAO {
 	
 	@Autowired
