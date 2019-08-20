@@ -46,7 +46,7 @@ public class CityDAO {
 			params, new CityRowMapper());
 	}
 	
-	public City getCityDetail(String cityId) {
+	public City getCityDetail(Long cityId) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("id", cityId);
 		
