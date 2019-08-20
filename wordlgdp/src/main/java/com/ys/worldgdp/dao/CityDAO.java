@@ -5,7 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import com.ys.worldgdp.City;
 import com.ys.worldgdp.dao.mapper.CityRowMapper;
@@ -42,7 +46,7 @@ public class CityDAO {
 			params, new CityRowMapper());
 	}
 	
-	public City getCityDetails(String cityId) {
+	public City getCityDetail(String cityId) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("id", cityId);
 		
@@ -51,6 +55,28 @@ public class CityDAO {
 				+ "district,population"
 				+ "from city where id = :id", 
 			params, new CityRowMapper());
-	}	
+	}
+	
+	public void addCity(String countryCode, City city) {
+		SqlParameterSource paramSource = 
+				new MapSqlParameterSource(getMapForCity(countryCode, city));
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		namedJdbcTemplate.update("INSERT INTO city("
+				+ " name, countrycode, "
+				+ " district, population) "
+				+ " VALUES (:name, :country_code, "
+				+ " :district, :population )",
+				paramSource, keyHolder);
+		
+		}
+	
+	private Map<String, Object> getMapForCity(String countryCode, City city) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("name", city.getName());
+		map.put("country_code", city.getCountryCode());
+		map.put("district", city.getDistrict());
+		map.put("population", city.getPopulation());
+		return map;
+	}
 
 }
