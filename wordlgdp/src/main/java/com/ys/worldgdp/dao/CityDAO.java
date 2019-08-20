@@ -57,7 +57,7 @@ public class CityDAO {
 			params, new CityRowMapper());
 	}
 	
-	public void addCity(String countryCode, City city) {
+	public long addCity(String countryCode, City city) {
 		SqlParameterSource paramSource = 
 				new MapSqlParameterSource(getMapForCity(countryCode, city));
 		KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -67,7 +67,7 @@ public class CityDAO {
 				+ " VALUES (:name, :country_code, "
 				+ " :district, :population )",
 				paramSource, keyHolder);
-		
+		return keyHolder.getKey().longValue();
 		}
 	
 	private Map<String, Object> getMapForCity(String countryCode, City city) {
@@ -79,4 +79,9 @@ public class CityDAO {
 		return map;
 	}
 
+	public void deleteCity(Long id) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("id", id);
+		namedJdbcTemplate.update("DELETE FROM city WHERE id = :id", params);
+	}
 }
