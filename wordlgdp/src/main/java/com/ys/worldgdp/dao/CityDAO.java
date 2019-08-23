@@ -22,7 +22,7 @@ import lombok.Setter;
 public class CityDAO {
 
 	@Autowired
-	NamedParameterJdbcTemplate namedJdbcTemplate;
+	NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
 	private static final Integer PAGE_SIZE = 20;
 
@@ -40,7 +40,7 @@ public class CityDAO {
 			params.put("size", PAGE_SIZE);
 		}
 		
-		return namedJdbcTemplate.query("SELECT"
+		return namedParameterJdbcTemplate.query("SELECT"
 				+ "ID,NAME,COUNTRYCODE COUNTRY_CODE,DISTRICT,POPULATION "
 				+ "FROM CITY WHERE COUNTRYCODE = :code"
 				+ "ORDER BY POPULATION DESC"
@@ -52,7 +52,7 @@ public class CityDAO {
 		Map<String, Object> params = new HashMap<>();
 		params.put("id", cityId);
 		
-		return namedJdbcTemplate.queryForObject("SELECT id,"
+		return namedParameterJdbcTemplate.queryForObject("SELECT id,"
 				+ "name,countrycode country_code,"
 				+ "district,population"
 				+ "from city where id = :id", 
@@ -63,7 +63,7 @@ public class CityDAO {
 		SqlParameterSource paramSource = 
 				new MapSqlParameterSource(getMapForCity(countryCode, city));
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		namedJdbcTemplate.update("INSERT INTO city("
+		namedParameterJdbcTemplate.update("INSERT INTO city("
 				+ " name, countrycode, "
 				+ " district, population) "
 				+ " VALUES (:name, :country_code, "
@@ -84,6 +84,6 @@ public class CityDAO {
 	public void deleteCity(Long id) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("id", id);
-		namedJdbcTemplate.update("DELETE FROM city WHERE id = :id", params);
+		namedParameterJdbcTemplate.update("DELETE FROM city WHERE id = :id", params);
 	}
 }

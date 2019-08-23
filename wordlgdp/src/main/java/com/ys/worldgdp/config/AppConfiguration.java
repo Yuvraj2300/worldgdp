@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = { "com.ys.worldgdp" })
+@ComponentScan(basePackages = "com.ys.worldgdp")
 public class AppConfiguration implements WebMvcConfigurer {
 
 	@Override

@@ -28,7 +28,7 @@ public class CityDAOTest {
 
 	@Before
 	public void setup() {
-		cityDao.setNamedJdbcTemplate(namedParamJdbcTemplate);;
+		cityDao.setNamedParameterJdbcTemplate(namedParamJdbcTemplate);;
 	}
 
 	@Test

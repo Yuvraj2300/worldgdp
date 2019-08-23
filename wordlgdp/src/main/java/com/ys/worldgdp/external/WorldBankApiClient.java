@@ -8,10 +8,12 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.ys.worldgdp.CountryGDP;
 
+@Service
 public class WorldBankApiClient {
 	String	GDP_URL="http://api.worldbank.org/countries/%s/indicators/NY.GDP.MKTP.CD?"
 			+ "format=json&date=2007:2019";

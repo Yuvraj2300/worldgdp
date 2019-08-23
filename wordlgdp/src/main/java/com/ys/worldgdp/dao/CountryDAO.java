@@ -64,11 +64,11 @@ public class CountryDAO {
 		params.put("offset", offset);
 		params.put("size",  PAGE_SIZE);
 		
-		System.out.println("Params: {}"+ params.toString());
-		System.out.println(SELECT_CLAUSE + " WHERE 1 = 1 "
-				+ (!StringUtils.isEmpty((String) params.get("search")) ? SEARCH_WHERE_CLAUSE : "")
-				+ (!StringUtils.isEmpty((String) params.get("continent")) ? CONTINENT_WHERE_CLAUSE : "")
-				+ (!StringUtils.isEmpty((String) params.get("region")) ? REGION_WHERE_CLAUSE : "") + " ORDER BY c.code "
+		System.out.println("Params: "+ params.toString());
+		System.out.println(SELECT_CLAUSE.trim() + " WHERE 1 = 1 "
+				+ (!StringUtils.isEmpty((String) params.get("search")) ? SEARCH_WHERE_CLAUSE.trim() : "")
+				+ (!StringUtils.isEmpty((String) params.get("continent")) ? CONTINENT_WHERE_CLAUSE.trim() : "")
+				+ (!StringUtils.isEmpty((String) params.get("region")) ? REGION_WHERE_CLAUSE.trim() : "") + " ORDER BY c.code "
 				+ "  LIMIT :size OFFSET :offset ");
 		
 		return namedParameterJdbcTemplate.query(
