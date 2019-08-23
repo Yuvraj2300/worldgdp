@@ -1,4 +1,4 @@
-package com.ys.worldhdp.test.dao;
+package com.ys.worldgdp.test.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.ys.worldgdp.City;
 import com.ys.worldgdp.dao.CityDAO;
-import com.ys.worldhdp.test.config.TestDBConfiguration;
+import com.ys.worldgdp.test.config.TestDBConfiguration;
 
 @RunWith(SpringRunner.class)
 @SpringJUnitConfig(classes = { TestDBConfiguration.class })

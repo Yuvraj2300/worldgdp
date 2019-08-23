@@ -1,4 +1,4 @@
-package com.ys.worldhdp.test.config;
+package com.ys.worldgdp.test.config;
 
 import javax.sql.DataSource;
 

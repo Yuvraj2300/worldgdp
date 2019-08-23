@@ -1,4 +1,4 @@
-package com.ys.worldhdp.test.dao;
+package com.ys.worldgdp.test.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
