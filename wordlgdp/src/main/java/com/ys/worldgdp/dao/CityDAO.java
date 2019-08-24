@@ -40,10 +40,10 @@ public class CityDAO {
 			params.put("size", PAGE_SIZE);
 		}
 		
-		return namedParameterJdbcTemplate.query("SELECT"
+		return namedParameterJdbcTemplate.query("SELECT "
 				+ "ID,NAME,COUNTRYCODE COUNTRY_CODE,DISTRICT,POPULATION "
-				+ "FROM CITY WHERE COUNTRYCODE = :code"
-				+ "ORDER BY POPULATION DESC"
+				+ "FROM CITY WHERE COUNTRYCODE = :code "
+				+ "ORDER BY POPULATION DESC "
 				+ ((pageNo != null) ? "LIMIT:offset, :size" : ""),
 			params, new CityRowMapper());
 	}
@@ -54,7 +54,7 @@ public class CityDAO {
 		
 		return namedParameterJdbcTemplate.queryForObject("SELECT id,"
 				+ "name,countrycode country_code,"
-				+ "district,population"
+				+ "district,population "
 				+ "from city where id = :id", 
 			params, new CityRowMapper());
 	}
