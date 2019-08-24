@@ -71,20 +71,26 @@ public class CountryDAO {
 				+ (!StringUtils.isEmpty((String) params.get("region")) ? REGION_WHERE_CLAUSE.trim() : "") + " ORDER BY c.code "
 				+ "  LIMIT :size OFFSET :offset ");
 		
+		String Queryformed=SELECT_CLAUSE + "WHERE 1=1 "
+				+ (!StringUtils.isEmpty((String) params.get("search")) ? SEARCH_WHERE_CLAUSE : "")
+				+ (!StringUtils.isEmpty((String) params.get("continent")) ? CONTINENT_WHERE_CLAUSE : "")
+				+ (!StringUtils.isEmpty(params.get("region")) ? REGION_WHERE_CLAUSE : "")
+				+ PAGINATION_CLAUSE;
+		
+		System.out.println(Queryformed);
+		
 		return namedParameterJdbcTemplate.query(
-				SELECT_CLAUSE + "WHERE 1=1 "
-						+ (StringUtils.isEmpty((String) params.get("search")) ? SEARCH_WHERE_CLAUSE : "")
-						+ (StringUtils.isEmpty((String) params.get("continent")) ? CONTINENT_WHERE_CLAUSE : "")
-						+ (StringUtils.isEmpty(params.get("region")) ? REGION_WHERE_CLAUSE : "") + PAGINATION_CLAUSE,
+				Queryformed,
 				params, new CountryRowMapper());
+//		 + PAGINATION_CLAUSE
 	}
 	
 	public int getCountriesCount(Map<String, Object> params) {
 		return namedParameterJdbcTemplate.queryForObject(
-				"SELECT COUNT(*) FROM COUNTRY c" + "WHERE 1=1"
-						+ (StringUtils.isEmpty((String) params.get("search")) ? SEARCH_WHERE_CLAUSE : "")
-						+ (StringUtils.isEmpty((String) params.get("continent")) ? CONTINENT_WHERE_CLAUSE : "")
-						+ (StringUtils.isEmpty(params.get("region")) ? REGION_WHERE_CLAUSE : ""),
+				"SELECT COUNT(*) FROM COUNTRY c " + "WHERE 1=1"
+						+ (!StringUtils.isEmpty((String) params.get("search")) ? SEARCH_WHERE_CLAUSE : "")
+						+ (!StringUtils.isEmpty((String) params.get("continent")) ? CONTINENT_WHERE_CLAUSE : "")
+						+ (!StringUtils.isEmpty(params.get("region")) ? REGION_WHERE_CLAUSE : ""),
 				params, Integer.class);
 	}
 
