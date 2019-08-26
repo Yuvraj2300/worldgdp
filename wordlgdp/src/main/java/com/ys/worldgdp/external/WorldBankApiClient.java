@@ -39,7 +39,7 @@ public class WorldBankApiClient {
 				valueStr = countryDataYearWise.get("value").toString();
 			}
 
-			String yearStr = countryDataYearWise.get("year").toString();
+			String yearStr = countryDataYearWise.get("date").toString();
 
 			CountryGDP gdp = new CountryGDP();
 			gdp.setValue((valueStr != null) ? Double.valueOf(valueStr) : null);
