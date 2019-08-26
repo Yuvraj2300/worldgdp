@@ -1,16 +1,19 @@
 package com.ys.worldgdp;
 
+import java.io.Serializable;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Data
 @Setter
 @Getter
-public class City {
+public class City implements Serializable{
 	@NotNull
 	private Long id;
 	@NotNull

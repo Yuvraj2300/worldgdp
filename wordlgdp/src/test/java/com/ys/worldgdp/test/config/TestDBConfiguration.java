@@ -18,7 +18,7 @@ public class TestDBConfiguration {
 				.setType(EmbeddedDatabaseType.H2)
 				.setScriptEncoding("UTF-8")
 				.ignoreFailedDrops(true)
-				.addScript("h2_world.sql")
+				.addScript("classpath:h2_world.sql")
 				.build();
 	}
 	

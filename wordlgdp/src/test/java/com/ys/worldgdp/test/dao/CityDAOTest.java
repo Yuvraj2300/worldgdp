@@ -18,7 +18,7 @@ import com.ys.worldgdp.dao.CityDAO;
 import com.ys.worldgdp.test.config.TestDBConfiguration;
 
 @RunWith(SpringRunner.class)
-@SpringJUnitConfig(classes = { TestDBConfiguration.class })
+@SpringJUnitConfig(classes = { TestDBConfiguration.class, CityDAO.class })
 public class CityDAOTest {
 	@Autowired
 	CityDAO cityDao;

@@ -32,7 +32,7 @@ import com.ys.worldgdp.dao.CityDAO;
 
 //@Slf4j
 @RunWith(SpringRunner.class)
-@SpringJUnitWebConfig(classes = { AppConfiguration.class })
+@SpringJUnitWebConfig(classes = { AppConfiguration.class, CityDAO.class })
 public class CityAPIControllerTest {
 
 	@Autowired

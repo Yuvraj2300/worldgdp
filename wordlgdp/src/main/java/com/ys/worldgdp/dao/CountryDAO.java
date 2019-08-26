@@ -97,7 +97,7 @@ public class CountryDAO {
 	public Country getCountryDetail(String code) {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("code", code);
-		return namedParameterJdbcTemplate.queryForObject(SELECT_CLAUSE + "WHERE c = :code", params,
+		return namedParameterJdbcTemplate.queryForObject(SELECT_CLAUSE + "WHERE c.code = :code", params,
 				new CountryRowMapper());
 	}
 
@@ -109,11 +109,11 @@ public class CountryDAO {
 			+ " continent = :continent, "
 			+ " region = :region, "
 			+ " HeadOfState = :headOfState, "
-			+ " GovernmentForm = :governmentForm, "
-			+ " IndepYear = :indepYear, "
-			+ " SurfaceArea = :surfaceArea, "
+			+ " governmentform = :governmentForm, "
+			+ " indepyear = :indepYear, "
+			+ " surfacearea = :surfaceArea, "
 			+ " population = :population, "
-			+ " LifeExpectancy = :lifeExpectancy "
+			+ " lifeexpectancy = :lifeExpectancy "
 			+ "WHERE Code = :code ",
 		getCountryAsMap(code, country));
 	}
