@@ -13,7 +13,7 @@ public class WorldApplicationInitializer extends AbstractAnnotationConfigDispatc
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
 		// TODO Auto-generated method stub
-		return new Class[] { AppConfiguration.class };
+		return new Class[] { AppConfiguration.class, ViewConfiguration.class };
 	}
 
 	@Override
