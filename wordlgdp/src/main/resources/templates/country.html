@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{base}">
+
+<head>
+<title>[[${c.code}]] - [[${c.name}]]</title>
+</head>
+
+<div layout:fragment="page_content" id="page_content">
+	<nav aria-label="breadcrumb" role="navigation">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a th:href="@{/countries}">Countries</a></li>
+			<li class="breadcrumb-item active" aria-current="page">[[${c.name}]]</li>
+		</ol>
+	</nav>
+
+	<h1>
+		[[|${c.name}(${c.code} / ${c.code2})|]] <span class="pull-right">
+			<a class="btn btn-sm btn-success"
+			th:href="@{|/contries/${c.code}/form|}"> <i class="fa fa-pencil"></i>
+				Edit
+		</a>
+		</span>
+	</h1>
+	<div class="row">
+		<div th:class="|col-md-3 flag-icon flag-icon-${#strings.toLowerCase(c.code2)}|">
+		</div>
+		<div class="col-md-9">
+			<div class="row">
+
+				<div class="col">
+					<div class="row">
+						<div class="col font-weight-bold">Capital</div>
+						<div class="col">[[${c.capital.name}]]</div>
+					</div>
+					<div class="row">
+						<div class="col font-weight-bold">Continent</div>
+						<div class="col">[[${c.continent}]]</div>
+					</div>
+					<div class="row">
+						<div class="col font-weight-bold">Region</div>
+						<div class="col">[[${c.region}]]</div>
+					</div>
+					<div class="row">
+						<div class="col font-weight-bold">Head of State</div>
+						<div class="col">[[${c.headOfState}]]</div>
+					</div>
+					<div class="row">
+						<div class="col font-weight-bold">Government</div>
+						<div class="col">[[${c.governmentForm}]]</div>
+					</div>
+				</div>
+
+
+				<div class="col">
+					<div class="row">
+						<div class="col font-weight-bold">Local Name</div>
+						<div class="col">[[${c.localName}]]</div>
+					</div>
+					<div class="row">
+						<div class="col font-weight-bold">Independence</div>
+						<div class="col">[[${c.indepYear}]]</div>
+					</div>
+					<div class="row">
+						<div class="col font-weight-bold">Surface Area</div>
+						<div class="col">[[${c.surfaceArea}]]</div>
+					</div>
+					<div class="row">
+						<div class="col font-weight-bold">Population</div>
+						<div class="col">[[${c.population}]]</div>
+					</div>
+					<div class="row">
+						<div class="col font-weight-bold">Life Expectancy</div>
+						<div class="col">[[${c.lifeExpectancy}]]</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<hr />
+
+	<div class="row">
+		<div class="col-md-3">
+			<h2>
+				Cities <span class="pull-right">
+					<button id="new-city" class="btn btn-sm btn-success"
+						title="Add New City">
+						<i class="fa fa-plus"></i> New
+					</button>
+				</span>
+			</h2>
+			<ul class="list-group" id="cities">
+				<li class="list-group-item alert alert-info"><i
+					class="fa fa-spinner fa-spin"></i> Loading cities...</li>
+			</ul>
+		</div>
+
+		<div class="col-md-3">
+			<h2>
+				Languages <span class="pull-right">
+					<button id="new-language" class="btn btn-sm btn-success"
+						title="Add New Language">
+						<i class="fa fa-plus"></i> New
+					</button>
+				</span>
+			</h2>
+			<ul class="list-group" id="languages">
+				<li class="list-group-item alert alert-info"><i
+					class="fa fa-spinner fa-spin"></i> Loading languages...</li>
+			</ul>
+		</div>
+
+		<div class="col-md-6">
+			<h2>GDP</h2>
+			<div id="gdp-chart" style="height: 480px;">
+				<div class="alert alert-info">
+					<i class="fa fa-spinner fa-spin"></i> Loading GDP Data...
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<body>
+
+			</body></html>
