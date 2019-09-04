@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{base}">
+<head>
+<title>Edit [[${c.code}]] - [[${c.name}]]</title>
+</head>
+
+<div layout:fragment="page_content" id="page-content">
+	<nav aria-label="breadcrumb" role="navigation">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a th:href="@{/countries}">Countries</a></li>
+			<li class="breadcrumb-item active"><a
+				th:href="@{|/countries/${c.code}|}">[[${c.name}]]</a></li>
+			<li class="breadcrumb-item" aria-current="page">[[|Editing
+				${c.name} (${c.code} / ${c.code2})|]]</li>
+		</ol>
+	</nav>
+	<h1>[[|Editing ${c.name}(${c.code} / ${c.code2})|]]</h1>
+	<form class="form-horiontal" id="country-form"
+		th:action="@{|/api/countries/${c.code}|}"
+		method="post" th:object="${c}">
+		<input type="hidden" th:field="*{code}" />
+		<input type="hidden" th:field="*{code2}" />
+		<input type="hidden" th:field="*{gnp}" />
+
+		<div class="row">
+			<div class="col-md-4">
+				<label class="control-label required" for="name">Name</label> <input
+					type=text class="form-control required" th:field="*{name}"
+					id="name" />
+			</div>
+
+			<div class="col-md-4">
+				<label class="control-label required" for="localName">Local
+					Name</label> <input type=text class="form-control required"
+					th:field="*{localName}" id="localName" />
+			</div>
+
+			<div class="col-md-4">
+				<label class="control-label" for="capital.id">Capital</label> <select
+					class="form-control" th:field="*{capital.id}">
+					<option value=""></option>
+					<option th:each="cy : ${cities}" th:value="${cy.id}">[[${cy.name}]]</option>
+				</select>
+
+			</div>
+		</div>
+	<br />
+	</form>
+
+</div>
+
+
+</html>
