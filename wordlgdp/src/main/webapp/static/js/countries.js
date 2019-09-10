@@ -1,4 +1,5 @@
 var pageSize = 20;
+//debugger;
 $(function(){
 	var count = $("#pagination").attr("count");
 	$('#pagination').bootpag({				

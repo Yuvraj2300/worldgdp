@@ -1,6 +1,3 @@
-/**
- * 
- */
 var pageSize = 10;
 $(function() {
 	getGDP();
@@ -32,7 +29,7 @@ $(function() {
 		}
 	});
 
-	$("#languages").on('click', 'delete-language', function() {
+	$("#languages").on('click', '.delete-language', function() {
 		var code = $(this).data("code");
 		var lang = $(this).data("lang");
 		var result = confirm("Do you want to delete the language?");
@@ -41,11 +38,11 @@ $(function() {
 				method : "DELETE",
 				url : "/worldgdp/api/languages/" + code + "/language/" + lang,
 				success : function() {
-					success("Language delted  successfully");
+					success("Language deleted successfully");
 					getLanguages(1);
 				},
 				error : function(response) {
-					error("Error ocurred while deleting the language");
+					error("Error occurred while deleting language");
 				}
 			});
 		}
@@ -58,6 +55,18 @@ function loadNewCityModal() {
 	loadModal("city-form-template", {});
 	/*
 	 * var html = Mustache.to_html($("#city-form-template").html(), {});
+	 * $("#worldModal").html(html);
+	 */
+	setupForm('city-form', function() {
+		success("City Added Successfully");
+		getCities(1);
+	});
+}
+
+function loadNewLanguageModal() {
+	loadModal("language-form-template", {});
+	/*
+	 * var html = Mustache.to_html($("#language-form-template").html(), {});
 	 * $("#worldModal").html(html);
 	 */
 	setupForm('language-form', function() {
@@ -84,10 +93,8 @@ function getCities(pageNo) {
 		} else {
 			md['more'] = 0;
 		}
-
 		md['pageNo'] = pageNo + 1;
 		var html = Mustache.to_html($("#cities-list-template").html(), md);
-
 		if (pageNo == 1) {
 			$("#cities").html(html);
 		} else {
@@ -131,6 +138,74 @@ function getLanguages(pageNo) {
 
 function getGDP() {
 	$.getJSON("/worldgdp/api/countries/" + code + "/gdp", function(data) {
-		
+
+		var dataTable = new google.visualization.DataTable();
+		dataTable.addColumn('number', 'Years');
+		dataTable.addColumn('number', 'GDP (current US$)');
+		var rows = [];
+		// console.log(numeral(646438380568.715).format('($0.00 a)'));
+		_.each(data, function(item) {
+			rows.push([ item.year, item.value ])
+		});
+		dataTable.addRows(rows);
+
+		var options = {
+			hAxis : {
+				title : 'Year'
+			},
+			vAxis : {
+				title : 'GDP (current US$)'
+			}
+		};
+
+		$("#gdp-chart").html('');
+		google.charts.setOnLoadCallback(function() {
+			var chart = new google.visualization.LineChart(document
+					.getElementById('gdp-chart'));
+			chart.draw(dataTable, options);
+		});
+
 	});
+}
+
+function setupForm(formId, successCallback) {
+
+	$("select").each(function() {
+		$(this).val($(this).attr("value"));
+	});
+
+	$('#' + formId).validate({
+		errorClass : "is-invalid",
+		validClass : "is-valid"
+	});
+	$("#save-btn").on('click', function() {
+		if ($('#' + formId).valid()) {
+			var requestBody = $('#' + formId).serializeJSON();
+			/*
+			 * $.each($('#'+formId).serializeArray(), function(){ var obj =
+			 * $(this)[0]; if ( obj.name.indexOf(".") >= 0){ var nestedObj =
+			 * obj.name.split(".")[0]; var nestedObjProp =
+			 * obj.name.split(".")[1]; if ( !requestBody[nestedObj]){
+			 * requestBody[nestedObj] = {}; }
+			 * requestBody[nestedObj][nestedObjProp] = obj.value; }else{
+			 * requestBody[obj.name] = obj.value; }
+			 * 
+			 * });
+			 */
+			$.ajax({
+				method : "POST",
+				url : $('#' + formId).attr("action"),
+				success : function(data) {
+					successCallback(data);
+				},
+				error : function(response) {
+					error(response.responseText);
+				},
+				data : JSON.stringify(requestBody),
+				contentType : "application/json"
+			});
+		}
+		return false;
+	});
+
 }

@@ -7,17 +7,20 @@
 <head>
 <title>Countries</title>
 </head>
+
 <div layout:fragment="page_content" id="page_content">
 	<h1 class="page-header">Countries</h1>
 	<div class="row justify-content-md-center">
 		<div class="col-md-6 input-group">
-			<input type="text" class="" id="search_f" th:value="${param.search}"
-				name="search" placeholder="Search by name" />
-			<button name="searchBtn" class="">Search</button>
+			<input type="text" class="filter form-control" id="search_f"
+				th:value="${param.search}" name="search"
+				placeholder="Search by name" />
+			<button id="searchBtn" class="btn btn-primary btn-sm">
+				<i class="fa fa-search"></i> Search
+			</button>
 		</div>
 	</div>
 	<br />
-
 	<div class="row">
 		<div class="col">
 			<table class="table table-striped">
@@ -29,21 +32,20 @@
 					<tr>
 						<th><select class="form-control filter" id="continents_f"
 							name="continent">
+
 								<option value="">All</option>
 								<option th:each="c : ${continents}" th:value="${c}"
-									th:selected="${#strings.equals(c,param.continent)}">[[${c}]]</option>
+									th:selected="${#strings.equals(c, param.continent)}">[[${c}]]</option>
 						</select></th>
-
 						<th><select class="form-control filter" id="regions_f"
 							name="region">
 								<option value="">All</option>
 								<option th:each="r : ${regions}" th:value="${r}"
-									th:selected="${#strings.equals(r,param.region)}">[[${r}]]</option>
+									th:selected="${#strings.equals(r, param.region)}">[[${r}]]</option>
 						</select></th>
 					</tr>
 				</thead>
 			</table>
-
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -55,7 +57,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="c:${countries}">
+					<tr th:each="c : ${countries}">
 						<td><a th:href="@{|/countries/${c.code}|}">[[${c.code}]]</a></td>
 						<td>[[${c.name}]]</td>
 						<td>[[${c.continent}]]</td>
@@ -67,10 +69,10 @@
 			<div>
 				<span id="pagination" th:attr="count=${count}"></span>
 			</div>
+
 		</div>
 	</div>
 </div>
-
 <th:block layout:fragment="scripts">
 	<script th:src="@{/static/js/countries.js}"></script>
 </th:block>
