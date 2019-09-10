@@ -1,5 +1,6 @@
 var pageSize = 10;
 $(function() {
+	debugger;
 	getGDP();
 
 	$("#new-city").on('click', function() {
